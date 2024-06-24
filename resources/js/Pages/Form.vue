@@ -9,6 +9,12 @@
         <p class="text-lx text-center">ระหว่างวันที่ 23-25 กุมภาพันธ์ 2567 ณ มหาวิทยาลัยxxx</p>
         <div class="bg-white w-full shadow-lg rounded-xl px-8 py-8 mt-4">
             <form>
+                <div class="flex w-full justify-end pr-4">
+                    <div v-if="!isSaved" class="text-gray-400">
+                        <span class="loading loading-spinner"></span>
+                    </div>
+                    <p v-if="isSaved" class="text-lg text-green-700 uppercase font-bold">Saved</p>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="form-control w-full">
@@ -105,11 +111,11 @@
                             <div class="label">
                                 <span class="label-text capitalize">ชื่อชุดการการแสดง</span>
                             </div>
-                            <input v-model="form.performance_name" class="input input-bordered w-full"
+                            <input v-model="form.name" class="input input-bordered w-full"
                                    placeholder="Type here" type="text"/>
                         </label>
-                        <div v-if="$page.props.errors.performance_name" class="text-red-500 text-sm">
-                            {{ $page.props.errors.performance_name }}
+                        <div v-if="$page.props.errors.name" class="text-red-500 text-sm">
+                            {{ $page.props.errors.name }}
                         </div>
                     </div>
 
@@ -120,24 +126,24 @@
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="inline-flex items-center">
-                                    <input v-model="form.performance_type" class="checkbox"
+                                    <input v-model="form.type" class="checkbox"
                                            type="checkbox" value="การแสดงนาฏศิลป์ไทย">
                                     <span class="ml-2">การแสดงนาฏศิลป์ไทย</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input v-model="form.performance_type" class="checkbox" type="checkbox"
+                                    <input v-model="form.type" class="checkbox" type="checkbox"
                                            value="การแสดงนาฏศิลป์พื้นบ้าน">
                                     <span class="ml-2">การแสดงนาฏศิลป์พื้นบ้าน</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input v-model="form.performance_type" class="checkbox" type="checkbox"
+                                    <input v-model="form.type" class="checkbox" type="checkbox"
                                            value="การแสดงนาฏศิลป์ร่วมสมัย">
                                     <span class="ml-2">การแสดงนาฏศิลป์ร่วมสมัย</span>
                                 </label>
                             </div>
                         </label>
-                        <div v-if="$page.props.errors.performance_type" class="text-red-500 text-sm">
-                            {{ $page.props.errors.performance_type }}
+                        <div v-if="$page.props.errors.type" class="text-red-500 text-sm">
+                            {{ $page.props.errors.type }}
                         </div>
                     </div>
 
@@ -146,12 +152,12 @@
                             <div class="label">
                                 <span class="label-text capitalize">คำอธิบายประกอบชุดการแสดง</span>
                             </div>
-                            <textarea v-model="form.performance_description"
+                            <textarea v-model="form.description"
                                       class="w-full border border-gray-300 rounded-md px-4 py-4"
                                       rows="4"></textarea>
                         </label>
-                        <div v-if="$page.props.errors.performance_description" class="text-red-500 text-sm">
-                            {{ $page.props.errors.performance_description }}
+                        <div v-if="$page.props.errors.description" class="text-red-500 text-sm">
+                            {{ $page.props.errors.description }}
                         </div>
                     </div>
 
@@ -160,11 +166,11 @@
                             <div class="label">
                                 <span class="label-text capitalize">ระยะเวลาในการแสดง</span>
                             </div>
-                            <input v-model="form.performance_duration" class="input input-bordered w-full"
+                            <input v-model="form.duration" class="input input-bordered w-full"
                                    placeholder="เช่น 1.5 ชั่วโมง" type="text"/>
                         </label>
-                        <div v-if="$page.props.errors.performance_duration" class="text-red-500 text-sm">
-                            {{ $page.props.errors.performance_duration }}
+                        <div v-if="$page.props.errors.duration" class="text-red-500 text-sm">
+                            {{ $page.props.errors.duration }}
                         </div>
                     </div>
 
@@ -186,12 +192,12 @@
                             <div class="label">
                                 <span class="label-text capitalize">รายชื่อผู้ควบคุมการแสดง</span>
                             </div>
-                            <textarea v-model="form.performance_directors"
+                            <textarea v-model="form.directors"
                                       class="w-full border border-gray-300 rounded-md px-4 py-4"
                                       placeholder="1.นายคิดดี มีชัย" rows="4"></textarea>
                         </label>
-                        <div v-if="$page.props.errors.performance_directors" class="text-red-500 text-sm">
-                            {{ $page.props.errors.performance_directors }}
+                        <div v-if="$page.props.errors.directors" class="text-red-500 text-sm">
+                            {{ $page.props.errors.directors }}
                         </div>
                     </div>
 
@@ -430,7 +436,7 @@
                     <div>
                         <label class="form-control w-full">
                             <div class="label">
-                                <span class="label-text capitalize">วันที่เดินทางมาถึง</span>
+                                <span class="label-text capitalize">วันที่เดินทางกลับ</span>
                             </div>
                             <input v-model="form.arrival_date" class="input input-bordered w-full"
                                    placeholder="Type here" type="date"/>
@@ -547,9 +553,6 @@
                         </div>
                     </div>
                     <div class="col-span-2 w-full mt-2 flex gap-4 justify-end">
-                        <button :disabled="isSubmitting" class="btn btn-warning text-white" type="button"
-                                @click.prevent="saveDraft">บันทึกร่าง
-                        </button>
                         <button :disabled="isSubmitting" class="btn btn-primary text-white" type="button">ส่งข้อมูล
                         </button>
                     </div>
@@ -570,50 +573,58 @@ import {useForm} from "@inertiajs/inertia-vue3";
 export default {
     name: "Index",
     components: {Layout, Link},
-    props: {},
+    props: {
+        performance: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             isSubmitting: false,
+            dirtyForm: false,
+            debounce: null,
             form: useForm({
+                performance_id: this.performance.id ?? null,
                 institution: this.$page.props.user.institution,
                 email: this.$page.props.user.email,
-                institution_head_name: null,
-                institution_head_position: null,
                 coordinator_name: this.$page.props.user.name,
-                coordinator_position: null,
                 coordinator_phone: this.$page.props.user.tel,
-                performance_name: null,
-                performance_type: [],
-                performance_description: null,
-                performance_duration: null,
-                number_of_performers: null,
-                performance_directors: null,
-                performers: null,
-                musicians_or_narrators: null,
-                number_of_musicians: null,
-                opening_scene: null,
-                stage_performance: null,
-                ending_scene: null,
-                costume_and_props: null,
-                stage_lighting: null,
-                sound_type: null,
-                number_of_microphones: null,
-                number_of_amplifiers: null,
-                other_specifications: null,
-                sound_control: null,
-                institution_representatives: null,
-                faculty_and_staff: null,
-                students: null,
-                vehicles: null,
-                arrival_date: '2024-09-01',
-                arrival_time: '10:00',
-                departure_date: '2024-09-01',
-                departure_time: '10:00',
-                accommodation: null,
-                ceremony_and_reception_details: null,
-                number_of_institution_heads: null,
-                number_of_faculty_and_staff: null,
-                number_of_students: null
+                institution_head_name: this.performance.institution_head_name,
+                institution_head_position: this.performance.institution_head_position,
+                coordinator_position: this.performance.coordinator_position,
+                name: this.performance.name,
+                type: this.performance.type,
+                description: this.performance.description,
+                duration: this.performance.duration,
+                number_of_performers: this.performance.number_of_performers,
+                directors: this.performance.directors,
+                performers: this.performance.performers,
+                musicians_or_narrators: this.performance.musicians_or_narrators,
+                number_of_musicians: this.performance.number_of_musicians,
+                opening_scene: this.performance.opening_scene,
+                stage_performance: this.performance.stage_performance,
+                ending_scene: this.performance.ending_scene,
+                costume_and_props: this.performance.costume_and_props,
+                stage_lighting: this.performance.stage_lighting,
+                sound_type: this.performance.sound_type,
+                number_of_microphones: this.performance.number_of_microphones,
+                number_of_amplifiers: this.performance.number_of_amplifiers,
+                other_specifications: this.performance.other_specifications,
+                sound_control: this.performance.sound_control,
+                institution_representatives: this.performance.institution_representatives,
+                faculty_and_staff: this.performance.faculty_and_staff,
+                students: this.performance.students,
+                vehicles: this.performance.vehicles,
+                arrival_date: this.performance.arrival_date,
+                arrival_time: this.performance.arrival_time,
+                departure_date: this.performance.departure_date,
+                departure_time: this.performance.departure_time,
+                accommodation: this.performance.accommodation,
+                ceremony_and_reception_details: this.performance.ceremony_and_reception_details,
+                number_of_institution_heads: this.performance.number_of_institution_heads,
+                number_of_faculty_and_staff: this.performance.number_of_faculty_and_staff,
+                number_of_students: this.performance.number_of_students
             }),
         };
     },
@@ -625,11 +636,33 @@ export default {
             this.isSubmitting = true;
             const url = this.route('save_draft');
             const res = await axios.post(url, this.form);
-
+            if (res.status === 200) {
+                this.isSubmitting = false;
+                this.dirtyForm = false;
+                return
+            }
         }
     },
-    watch: {},
-    computed: {}
+    watch: {
+        form: {
+            handler() {
+                this.dirtyForm = true;
+                clearTimeout(this.debounce)
+                this.debounce = setTimeout(() => {
+                    this.saveDraft();
+                }, 3000);
+            },
+            deep: true
+        }
+    },
+    computed: {
+        isSaved() {
+            if (this.dirtyForm) {
+                return false;
+            }
+            return true;
+        }
+    }
 };
 </script>
 

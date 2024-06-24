@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Dashboard\SavePerformanceAction;
 use App\Actions\RegisterUserAction;
+use App\Http\Requests\Dashboard\SavePerformanceDraftRequest;
+use App\Http\Transformers\PerformanceTransformer;
 use App\Http\Transformers\SubjectTransformer;
+use App\Models\Performance;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,12 +36,23 @@ class PageController extends Controller
 
     public function form()
     {
-        return Inertia::render('Form');
+        $performance = Performance::where('user_id', Auth::id())->first();
+        $performanceData = fractal($performance, new PerformanceTransformer())->toArray();
+        return Inertia::render('Form')->with([
+            'performance' => $performanceData
+        ]);
     }
 
-    public function saveDraft(Request $request)
+    public function saveDraft(SavePerformanceDraftRequest $request, SavePerformanceAction $action)
     {
-        dd($request->all());
+        $performance = Performance::find($request->performance_id);
+        if (!$performance) {
+            $performance = Performance::create([
+                'user_id' => Auth::id(),
+            ]);
+        }
+        $performance = $action->execute($performance, $request->validated());
+        return response()->json(null, 200);
     }
 
     public function dashboard()

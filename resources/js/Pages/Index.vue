@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div>
-            <div class="card bg-base-100 w-96 shadow-xl">
+            <div v-if="$page.props.user" class="card bg-base-100 w-96 shadow-xl">
                 <figure>
                     <img
                         alt="Shoes"
