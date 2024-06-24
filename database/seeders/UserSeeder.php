@@ -19,21 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com'
         ]);
-        User::factory()->create([
-            'role_id' => Role::where('name', 'admin')->first()->id,
-            'name' => 'sutjapong',
-            'email' => 'sutjapong.p@gmail.com'
-        ]);
-//        User::factory()->create([
-//            'role_id' => Role::where('name', 'manager')->first()->id,
-//            'name' => 'manager',
-//            'email' => 'manager@manager.com'
-//        ]);
-//        User::factory()->create([
-//            'role_id' => Role::where('name', 'user')->first()->id,
-//            'name' => 'user',
-//            'email' => 'user@user.com'
-//        ]);
-//        User::factory()->count(10)->create();
+
+        User::factory()->count(10)->create();
     }
 }
