@@ -49,9 +49,6 @@ export default {
         return {};
     },
     mounted() {
-        console.log('-----------------');
-        console.log(this.$page.props.user);
-        console.log('-----------------');
     },
     methods: {
         logout() {
