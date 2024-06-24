@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Role;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id')->nullable();
             $table->string('name');
+            $table->string('institution')->nullable();
             $table->string('email')->unique();
+            $table->string('tel')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
