@@ -5,13 +5,20 @@
                 <figure>
                     <img
                         alt="Shoes"
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"/>
+                        src="https://picsum.photos/500/400"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title">งานศิลปวัฒนธรรมอุดมศึกษา</h2>
                     <p>{{ $page.props.user.institution }}</p>
                     <div class="card-actions justify-end">
-                        <Link :href="route('form')" class="btn btn-primary">แก้ไข</Link>
+                        <Link v-if="performance && !performance.is_published" :href="route('form')"
+                              class="btn btn-primary">
+                            แก้ไข
+                        </Link>
+                        <div v-if="performance && performance.is_published"
+                             class="px-4 py-2 bg-green-700 rounded-md text-white opacity-50">
+                            ส่งเรียบร้อย
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,7 +36,12 @@ import {router} from "@inertiajs/vue3";
 export default {
     name: "Index",
     components: {Layout, Link},
-    props: {},
+    props: {
+        performance: {
+            type: Object || null,
+            default: null
+        }
+    },
     data() {
         return {};
     },

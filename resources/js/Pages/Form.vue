@@ -553,7 +553,9 @@
                         </div>
                     </div>
                     <div class="col-span-2 w-full mt-2 flex gap-4 justify-end">
-                        <button :disabled="isSubmitting" class="btn btn-primary text-white" type="button">ส่งข้อมูล
+                        <button :disabled="isSubmitting" class="btn btn-primary text-white" type="button"
+                                @click.prevent="submit">
+                            ส่งข้อมูล
                         </button>
                     </div>
                 </div>
@@ -639,7 +641,31 @@ export default {
             if (res.status === 200) {
                 this.isSubmitting = false;
                 this.dirtyForm = false;
-                return
+                return;
+            }
+        },
+        async submit() {
+            const result = await this.$swal({
+                title: "คุณต้องการจะส่งข้อมูล?",
+                showCancelButton: true,
+                confirmButtonText: "ยืนยัน",
+                confirmButtonColor: "#f43f5e",
+            });
+            if (!result.isConfirmed) {
+                return;
+            }
+            const url = this.route('submit_form', this.performance.id);
+            const res = await axios.patch(url, {});
+            if (res.status === 200) {
+                this.$swal({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'ท่านได้ยื่นรายละเอียดการแสดงเรียบร้อยแล้ว',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = this.route('index');
+                })
             }
         }
     },
