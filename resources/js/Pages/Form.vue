@@ -600,6 +600,7 @@ import {Link} from "@inertiajs/vue3";
 import {router} from "@inertiajs/vue3";
 import {useForm} from "@inertiajs/inertia-vue3";
 
+
 export default {
     name: "Index",
     components: {Layout, Link},
@@ -617,7 +618,7 @@ export default {
             displayImages: [],
             maxImage: 5,
             form: useForm({
-                performance_id: null,
+                performance_id: this.performance.id,
                 institution: this.$page.props.user.institution,
                 email: this.$page.props.user.email,
                 coordinator_name: this.$page.props.user.name,
@@ -664,7 +665,6 @@ export default {
         if (this.performance.length === 0) {
             return;
         }
-        this.form.performance_id = this.performance.id;
         this.displayImages = this.performance.images.data ?? [];
     },
     methods: {
@@ -716,6 +716,9 @@ export default {
             if (res.status === 200) {
                 this.isSubmitting = false;
                 this.dirtyForm = false;
+                if (this.performanceId == null) {
+                    this.performanceId = res.data.performance_id;
+                }
                 return;
             }
         },

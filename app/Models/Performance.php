@@ -71,4 +71,9 @@ class Performance extends Model implements HasMedia
                     ->keepOriginalImageFormat();
             });
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

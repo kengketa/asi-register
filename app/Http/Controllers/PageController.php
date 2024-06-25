@@ -48,10 +48,8 @@ class PageController extends Controller
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:10240'],
             'performance_id' => ['nullable'],
         ]);
-        if (isset($req['performance_id']) && $req['performance_id']) {
-            $performance = Performance::findOrFail($req['performance_id']);
-        }
-        if (!isset($req['performance_id']) || is_null($req['performance_id'])) {
+        $performance = Performance::where('user_id', Auth::id())->first();
+        if (!$performance) {
             $performance = Performance::create([
                 'user_id' => Auth::id(),
             ]);
@@ -80,13 +78,13 @@ class PageController extends Controller
 
     public function saveDraft(SavePerformanceDraftRequest $request, SavePerformanceAction $action)
     {
-        $performance = Performance::find($request->performance_id);
+        $performance = Performance::where('user_id', Auth::id())->first();
         if (!$performance) {
             $performance = Performance::create([
                 'user_id' => Auth::id(),
             ]);
         }
-        $performance = $action->execute($performance, $request->validated());
+        $action->execute($performance, $request->validated());
         return response()->json(null, 200);
     }
 

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->string('institution_head_name')->nullable();
             $table->string('institution_head_position')->nullable();
             $table->string('coordinator_position')->nullable();
