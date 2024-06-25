@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Dashboard\SavePerformanceAction;
 use App\Actions\RegisterUserAction;
 use App\Http\Requests\Dashboard\SavePerformanceDraftRequest;
+use App\Http\Transformers\ImageTransformer;
 use App\Http\Transformers\PerformanceTransformer;
 use App\Http\Transformers\SubjectTransformer;
 use App\Models\Performance;
@@ -35,10 +36,30 @@ class PageController extends Controller
     public function form()
     {
         $performance = Performance::where('user_id', Auth::id())->first();
-        $performanceData = fractal($performance, new PerformanceTransformer())->toArray();
+        $performanceData = fractal($performance, new PerformanceTransformer())->includeImages()->toArray();
         return Inertia::render('Form')->with([
             'performance' => $performanceData
         ]);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $req = $request->validate([
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:10240'],
+            'performance_id' => ['nullable'],
+        ]);
+        if (isset($req['performance_id']) && $req['performance_id']) {
+            $performance = Performance::findOrFail($req['performance_id']);
+        }
+        if (!isset($req['performance_id']) || is_null($req['performance_id'])) {
+            $performance = Performance::create([
+                'user_id' => Auth::id(),
+            ]);
+        }
+        $media = $performance->addMedia($req['image'])->toMediaCollection(Performance::MEDIA_COLLECTION_IMAGES);
+        $images = $performance->getMedia(Performance::MEDIA_COLLECTION_IMAGES);
+        $imagesData = fractal($images, new ImageTransformer())->toArray();
+        return response()->json($imagesData);
     }
 
     public function saveDraft(SavePerformanceDraftRequest $request, SavePerformanceAction $action)

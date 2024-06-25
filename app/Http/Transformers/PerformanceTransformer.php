@@ -10,6 +10,8 @@ use League\Fractal\TransformerAbstract;
 
 class PerformanceTransformer extends TransformerAbstract
 {
+    protected array $availableIncludes = ['images'];
+
     public function transform(Performance $performance): array
     {
         $data = [
@@ -59,6 +61,12 @@ class PerformanceTransformer extends TransformerAbstract
             'updated_at' => $performance->updated_at->format('Y-m-d H:i:s'),
         ];
         return $data;
+    }
+
+    public function includeImages(Performance $performance)
+    {
+        $images = $performance->getMedia(Performance::MEDIA_COLLECTION_IMAGES);
+        return $this->collection($images, new ImageTransformer());
     }
 
 

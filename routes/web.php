@@ -23,6 +23,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/form', [PageController::class, 'form'])->name('form');
     Route::post('/form/save-draft', [PageController::class, 'saveDraft'])->name('save_draft');
     Route::patch('/form/{performance}/submit', [PageController::class, 'submitForm'])->name('submit_form');
+
+    Route::post('/form/upload-image', [PageController::class, 'uploadImage'])->name('upload_image');
 });
 
 
