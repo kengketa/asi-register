@@ -647,6 +647,7 @@ export default {
         async submit() {
             const result = await this.$swal({
                 title: "คุณต้องการจะส่งข้อมูล?",
+                text: "โปรดระวัง! เมื่อส่งข้อมูลแล้วท่านจะไม่สามารถแก้ไขได้",
                 showCancelButton: true,
                 confirmButtonText: "ยืนยัน",
                 confirmButtonColor: "#f43f5e",

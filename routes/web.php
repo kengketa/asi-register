@@ -18,13 +18,16 @@ if (Features::enabled(Features::registration())) {
 }
 
 
-Route::get('/', [PageController::class, 'index'])->name('index');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/', [PageController::class, 'index'])->name('index');
+    Route::get('/form', [PageController::class, 'form'])->name('form');
+    Route::post('/form/save-draft', [PageController::class, 'saveDraft'])->name('save_draft');
+    Route::patch('/form/{performance}/submit', [PageController::class, 'submitForm'])->name('submit_form');
+});
+
+
 Route::get('/print', [PageController::class, 'print'])->name('print');
 Route::get('/export', [PageController::class, 'export'])->name('export');
-
-Route::get('/form', [PageController::class, 'form'])->name('form');
-Route::post('/form/save-draft', [PageController::class, 'saveDraft'])->name('save_draft');
-Route::patch('/form/{performance}/submit', [PageController::class, 'submitForm'])->name('submit_form');
 
 Route::resource('/subjects', SubjectController::class);
 
