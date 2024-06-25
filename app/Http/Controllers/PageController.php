@@ -107,6 +107,14 @@ class PageController extends Controller
         return response()->json(null, 200);
     }
 
+    public function performanceView(Performance $performance)
+    {
+        $performanceData = fractal($performance, new PerformanceTransformer())->includeImages()->toArray();
+        return Inertia::render('ShowPerformance')->with([
+            'performance' => $performanceData
+        ]);
+    }
+
     public function dashboard()
     {
         $user = Auth::user();

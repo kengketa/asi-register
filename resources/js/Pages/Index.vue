@@ -18,6 +18,11 @@
                              class="px-4 py-2 bg-green-700 rounded-md text-white opacity-50">
                             ส่งเรียบร้อย
                         </div>
+                        <Link v-if="performance && performance.is_published"
+                              :href="route('performance_view',performance.id)"
+                              class="px-4 py-2 bg-primary rounded-md text-white cursor-pointer">
+                            ดูสรุป
+                        </Link>
                     </div>
                 </div>
             </div>
