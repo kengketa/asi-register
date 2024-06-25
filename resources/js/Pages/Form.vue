@@ -556,10 +556,21 @@
                            @change="handleSelectImage">
                     <div class="col-span-2 w-full grid grid-cols-5 gap-4 mt-4">
                         <div v-for="(image,index) in displayImages" :key="index" class="w-full h-60 overflow-hidden">
-                            <img :src="image.url" class="object-cover w-full h-60">
+                            <div class="h-60 relative">
+                                <img :src="image.url" class="object-cover w-full h-60">
+                                <button class="absolute top-1 right-1 text-red-500" type="button"
+                                        @click.prevent="handleDeleteImage(image)">
+                                    <svg class="size-6" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <button
-                            v-if="displayImages.length < 5"
+                            v-if="displayImages.length < maxImage"
                             class="w-full h-60 border-2 border-dashed flex justify-center items-center text-gray-500"
                             type="button"
                             @click="$refs.imageInputRef.click()">
@@ -604,6 +615,7 @@ export default {
             dirtyForm: false,
             debounce: null,
             displayImages: [],
+            maxImage: 5,
             form: useForm({
                 performance_id: null,
                 institution: this.$page.props.user.institution,
@@ -656,6 +668,20 @@ export default {
         this.displayImages = this.performance.images.data ?? [];
     },
     methods: {
+        async handleDeleteImage(image) {
+            try {
+                const response = await axios.delete(this.route('delete_image', this.form.performance_id), {
+                    params: {
+                        image_id: image.id
+                    }
+                });
+                this.displayImages = response.data.data;
+            } catch (error) {
+                console.log('-----------------');
+                console.log(error);
+                console.log('-----------------');
+            }
+        },
         async handleSelectImage(event) {
             const image = event.target.files[0];
             const maxSizeInMB = 10;
