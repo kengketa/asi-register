@@ -16,13 +16,19 @@
                 <tr v-for="(performance,index) in performanceData" :key="index"
                     class="bg-white border-b">
                     <th class="text-center">{{ performance.id }}</th>
-                    <td class="px-6 py-4">{{ performance.owner.institution }}</td>
+                    <td class="px-6 py-4">
+                        <a :href="route('dashboard.performances.edit',performance.id)" class="underline"
+                           target="_blank">
+                            {{ performance.owner.institution }}
+                        </a>
+                    </td>
                     <td>{{ performance.owner.name }}</td>
                     <td>{{ performance.owner.email }}</td>
                     <td>{{ performance.owner.tel }}</td>
                     <td>
                         <div class="flex w-full items-center justify-center">
-                            <input :checked="performance.is_published" class="toggle toggle-success" type="checkbox"/>
+                            <input :checked="performance.is_published" class="toggle toggle-success"
+                                   type="checkbox" @change="handlePublish(performance)"/>
                         </div>
                     </td>
                 </tr>
@@ -71,21 +77,14 @@ export default {
         this.pagination = this.performances.meta.pagination;
     },
     methods: {
-        handleDeleteSubject(subject) {
-            this.$swal.fire({
-                title: "คุณต้องการที่จะลบวิชา " + subject.name_th + '?',
-                showDenyButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                denyButtonText: 'ลบ'
-            }).then((result) => {
-                if (result.isDenied) {
-                    Inertia.delete(this.route('dashboard.subjects.destroy', subject.id));
-                    nextTick(() => {
-                        window.location.reload();
-                    })
-                }
-            });
+        async handlePublish(performance) {
+            try {
+                const response = await axios.post(this.route('dashboard.performances.toggle_publish', performance.id));
+            } catch (e) {
+                console.log('-----------------');
+                console.log(e);
+                console.log('-----------------');
+            }
         },
         selectPage(pag) {
             Inertia.get(pag.url);

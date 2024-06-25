@@ -12,6 +12,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
         Route::resource('users', UserController::class);
         Route::resource('performances', PerformanceController::class);
+        Route::post('performances/{performance}/toggle-publish', [PerformanceController::class, 'togglePublish'])
+            ->name('performances.toggle_publish');
 
 //
 //        Route::resource('subjects', SubjectController::class);
