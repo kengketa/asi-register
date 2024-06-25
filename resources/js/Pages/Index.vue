@@ -10,7 +10,7 @@
                     <h2 class="card-title">งานศิลปวัฒนธรรมอุดมศึกษา</h2>
                     <p>{{ $page.props.user.institution }}</p>
                     <div class="card-actions justify-end">
-                        <Link v-if="performance && !performance.is_published" :href="route('form')"
+                        <Link v-if="!performance || (performance && !performance.is_published)" :href="route('form')"
                               class="btn btn-primary">
                             แก้ไข
                         </Link>
