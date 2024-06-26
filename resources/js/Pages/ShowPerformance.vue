@@ -47,7 +47,7 @@
                 <!-- Institution Head Name -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Institution Head Name
+                        ผู้บริหารสถาบันการศึกษา
                     </div>
                     <div class="col-span-9">
                         {{ performance.institution_head_name }}
@@ -57,7 +57,7 @@
                 <!-- Institution Head Position -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Institution Head Position
+                        ตำแหน่งผู้บริหารสถาบันการศึกษา
                     </div>
                     <div class="col-span-9">
                         {{ performance.institution_head_position }}
@@ -67,7 +67,7 @@
                 <!-- Coordinator Position -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Coordinator Position
+                        ตำแหน่งผู้ประสานงาน
                     </div>
                     <div class="col-span-9">
                         {{ performance.coordinator_position }}
@@ -77,7 +77,7 @@
                 <!-- Name -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Name
+                        ชื่อชุดการการแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.name }}
@@ -87,7 +87,7 @@
                 <!-- Type -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Type
+                        ประเภทชุดการแสดง
                     </div>
                     <div class="col-span-9">
                         <ul>
@@ -98,7 +98,7 @@
                 <!-- Description -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Description
+                        คำอธิบายประกอบชุดการแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.description }}
@@ -108,7 +108,7 @@
                 <!-- Duration -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Duration
+                        ระยะเวลาในการแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.duration }}
@@ -118,7 +118,7 @@
                 <!-- Number of Performers -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Performers
+                        จำนวนนักแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_performers }}
@@ -128,7 +128,7 @@
                 <!-- Directors -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Directors
+                        รายชื่อผู้ควบคุมการแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.directors }}
@@ -138,7 +138,7 @@
                 <!-- Performers -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Performers
+                        รายชื่อนักแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.performers }}
@@ -148,7 +148,7 @@
                 <!-- Musicians or Narrators -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Musicians or Narrators
+                        รายชื่อนักดนตรี/ผู้พากย์หรือผู้บรรยาย
                     </div>
                     <div class="col-span-9">
                         {{ performance.musicians_or_narrators }}
@@ -158,7 +158,7 @@
                 <!-- Number of Musicians -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Musicians
+                        จำนวนนักดนตรี
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_musicians }}
@@ -168,7 +168,7 @@
                 <!-- Opening Scene -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Opening Scene
+                        การเปิดเรื่องหรือภาพแสดงเริ่มแรกบนเวที
                     </div>
                     <div class="col-span-9">
                         {{ performance.opening_scene }}
@@ -178,7 +178,7 @@
                 <!-- Stage Performance -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Stage Performance
+                        การดำเนินเรื่องบนเวที
                     </div>
                     <div class="col-span-9">
                         {{ performance.stage_performance }}
@@ -188,7 +188,7 @@
                 <!-- Ending Scene -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Ending Scene
+                        การจบเรื่อง
                     </div>
                     <div class="col-span-9">
                         {{ performance.ending_scene }}
@@ -198,7 +198,7 @@
                 <!-- Costume and Props -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Costume and Props
+                        ลักษณะการแต่งกายและอุปกรณ์ประกอบการแสดง (MAKE UP & COSTUME, PROPS)
                     </div>
                     <div class="col-span-9">
                         {{ performance.costume_and_props }}
@@ -208,7 +208,7 @@
                 <!-- Stage Lighting -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Stage Lighting
+                        การควบคุมแสงบนเวที
                     </div>
                     <div class="col-span-9">
                         {{ performance.stage_lighting }}
@@ -218,7 +218,7 @@
                 <!-- Sound Type -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Sound Type
+                        ประเภทของเสียงประกอบการแสดง
                     </div>
                     <div class="col-span-9">
                         {{ performance.sound_type }}
@@ -228,7 +228,7 @@
                 <!-- Number of Microphones -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Microphones
+                        จำนวนไมค์โครโฟน
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_microphones }}
@@ -238,7 +238,7 @@
                 <!-- Number of Amplifiers -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Amplifiers
+                        จำนวนตู้แอมป์
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_amplifiers }}
@@ -248,7 +248,7 @@
                 <!-- Other Specifications -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Other Specifications
+                        อื่นๆ โปรดระบุ
                     </div>
                     <div class="col-span-9">
                         {{ performance.other_specifications }}
@@ -258,7 +258,7 @@
                 <!-- Sound Control -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Sound Control
+                        การควบคุมเสียง
                     </div>
                     <div class="col-span-9">
                         {{ performance.sound_control }}
@@ -268,7 +268,7 @@
                 <!-- Institution Representatives -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Institution Representatives
+                        รายชื่อผู้บริหาร/ผู้แทนสถาบัน
                     </div>
                     <div class="col-span-9">
                         {{ performance.institution_representatives }}
@@ -278,7 +278,7 @@
                 <!-- Faculty and Staff -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Faculty and Staff
+                        รายชื่ออาจารย์ / เจ้าหน้าที่
                     </div>
                     <div class="col-span-9">
                         {{ performance.faculty_and_staff }}
@@ -288,7 +288,7 @@
                 <!-- Students -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Students
+                        รายชื่อนักศึกษา
                     </div>
                     <div class="col-span-9">
                         {{ performance.students }}
@@ -298,7 +298,7 @@
                 <!-- Vehicles -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Vehicles
+                        รายการยานพาหนะ
                     </div>
                     <div class="col-span-9">
                         {{ performance.vehicles }}
@@ -308,7 +308,7 @@
                 <!-- Arrival Date -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Arrival Date
+                        วันที่เดินทางมาถึง
                     </div>
                     <div class="col-span-9">
                         {{ performance.arrival_date }}
@@ -318,7 +318,7 @@
                 <!-- Arrival Time -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Arrival Time
+                        เวลาที่เดินทางมาถึง
                     </div>
                     <div class="col-span-9">
                         {{ performance.arrival_time }}
@@ -328,7 +328,7 @@
                 <!-- Departure Date -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Departure Date
+                        วันที่เดินทางกลับ
                     </div>
                     <div class="col-span-9">
                         {{ performance.departure_date }}
@@ -338,7 +338,7 @@
                 <!-- Departure Time -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Departure Time
+                        เวลาที่เดินทางกลับ
                     </div>
                     <div class="col-span-9">
                         {{ performance.departure_time }}
@@ -348,7 +348,7 @@
                 <!-- Accommodation -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Accommodation
+                        ชื่อสถานที่พัก
                     </div>
                     <div class="col-span-9">
                         {{ performance.accommodation }}
@@ -358,7 +358,9 @@
                 <!-- Ceremony and Reception Details -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Ceremony and Reception Details
+                        ข้อมูลการเข้าร่วมพิธีเปิดและการเลี้ยงรับรอง
+                        จำนวนผู้บริหาร / ผู้แทนสถาบันการศึกษา ที่เข้าร่วม
+
                     </div>
                     <div class="col-span-9">
                         {{ performance.ceremony_and_reception_details }}
@@ -368,7 +370,7 @@
                 <!-- Number of Institution Heads -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Institution Heads
+                        จำนวนผู้บริหารเข้าร่วมพิธีเปิดและการเลี้ยงรับรอง
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_institution_heads }}
@@ -378,7 +380,7 @@
                 <!-- Number of Faculty and Staff -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Faculty and Staff
+                        จำนวนอาจารย์ / เจ้าหน้าที่ เข้าร่วมพิธีเปิดและการเลี้ยงรับรอง
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_faculty_and_staff }}
@@ -388,7 +390,7 @@
                 <!-- Number of Students -->
                 <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-3">
-                        Number of Students
+                        จำนวนนักศึกษา ที่เข้าร่วม
                     </div>
                     <div class="col-span-9">
                         {{ performance.number_of_students }}
@@ -410,7 +412,6 @@
 <script>
 import Layout from "@/Pages/Layout/Layout.vue";
 import {Link} from "@inertiajs/vue3";
-
 
 export default {
     name: "ShowPerformance",
@@ -439,3 +440,5 @@ export default {
 
 <style scoped>
 </style>
+
+
