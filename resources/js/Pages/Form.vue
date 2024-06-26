@@ -587,7 +587,7 @@
                         <div v-for="(image,index) in displayImages" :key="index" class="w-full h-60 overflow-hidden">
                             <div class="h-60 relative">
                                 <img :src="image.url" class="object-cover w-full h-60">
-                                <button class="absolute top-1 right-1 text-red-500" type="button"
+                                <button v-if="!isSubmitting" class="absolute top-1 right-1 text-red-500" type="button"
                                         @click.prevent="handleDeleteImage(image)">
                                     <svg class="size-6" fill="none" stroke="currentColor"
                                          stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -596,17 +596,26 @@
                                               stroke-linejoin="round"/>
                                     </svg>
                                 </button>
+                                <div v-if="isSubmitting"
+                                     class="absolute top-0 left-0 w-full h-60 bg-white opacity-50 flex items-center justify-center">
+                                    <span class="loading loading-spinner loading-lg"></span>
+                                </div>
                             </div>
                         </div>
                         <button
                             v-if="displayImages.length < maxImage"
                             class="w-full h-60 border-2 border-dashed flex justify-center items-center text-gray-500"
                             type="button"
-                            @click="$refs.imageInputRef.click()">
-                            <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            @click="selectingImage">
+                            <div v-if="!isSubmitting">
+                                <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div v-if="isSubmitting">
+                                <span class="loading loading-spinner loading-lg"></span>
+                            </div>
                         </button>
                     </div>
                     <div class="col-span-2 w-full mt-2 flex gap-4 justify-end">
@@ -616,6 +625,29 @@
                         </button>
                     </div>
                 </div>
+                <button ref="showSendingEmailModal" class="btn hidden" onclick="sending_email.showModal()"
+                        type="button">
+                    open modal
+                </button>
+                <dialog id="sending_email" class="modal">
+                    <div class="modal-box">
+                        <form method="dialog">
+                            <button ref="sendingEmailCloseModal"
+                                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hidden">
+                                ✕
+                            </button>
+                        </form>
+                        <h3 class="text-lg font-bold text-center text-gray-500">กำลังส่งข้อมูล</h3>
+                        <div class="flex flex-col items-center justify-center gap-2">
+                            <span class="loading loading-spinner text-success mt-2"></span>
+                            <p class="py-4 text-center text-gray-500">
+                                กำลังส่งข้อมูลให้กับแอดมิน กรุณารอสักครู
+                                และอย่าออกจากหน้านี้
+                            </p>
+                        </div>
+
+                    </div>
+                </dialog>
             </form>
         </div>
     </Layout>
@@ -641,7 +673,9 @@ export default {
     },
     data() {
         return {
+            performanceId: null,
             isSubmitting: false,
+            isSending: false,
             dirtyForm: false,
             debounce: null,
             displayImages: [],
@@ -656,7 +690,7 @@ export default {
                 institution_head_position: this.performance.institution_head_position ?? "",
                 coordinator_position: this.performance.coordinator_position ?? "",
                 name: this.performance.name ?? "",
-                type: this.performance.type ?? "",
+                type: this.performance.type ?? [],
                 description: this.performance.description ?? "",
                 duration: this.performance.duration ?? "",
                 number_of_performers: this.performance.number_of_performers ?? "",
@@ -695,17 +729,25 @@ export default {
             return;
         }
         this.displayImages = this.performance.images.data ?? [];
+        this.performanceId = this.performance.id;
     },
     methods: {
+        selectingImage() {
+            if (this.isSubmitting) return;
+            this.$refs.imageInputRef.click()
+        },
         async handleDeleteImage(image) {
+            this.isSubmitting = true;
             try {
-                const response = await axios.delete(this.route('delete_image', this.form.performance_id), {
+                const response = await axios.delete(this.route('delete_image', this.performanceId), {
                     params: {
                         image_id: image.id
                     }
                 });
                 this.displayImages = response.data.data;
+                this.isSubmitting = false;
             } catch (error) {
+                this.isSubmitting = false;
                 console.log('-----------------');
                 console.log(error);
                 console.log('-----------------');
@@ -726,15 +768,19 @@ export default {
 
             const formData = new FormData();
             formData.append('image', image);
-            if (this.form.performance_id != null) {
-                formData.append('performance_id', this.form.performance_id);
+            if (this.performanceId != null) {
+                formData.append('performance_id', this.performanceId);
             }
             try {
+                this.isSubmitting = true;
                 const response = await axios.post(this.route('upload_image'), formData, {
                     headers: {'Content-Type': 'multipart/form-data'}
                 });
-                this.displayImages = response.data.data;
+                this.displayImages = response.data.images.data;
+                this.performanceId = response.data.performance_id
+                this.isSubmitting = false;
             } catch (error) {
+                this.isSubmitting = false;
                 console.error('Error uploading image:', error);
             }
         },
@@ -745,9 +791,7 @@ export default {
             if (res.status === 200) {
                 this.isSubmitting = false;
                 this.dirtyForm = false;
-                if (this.performanceId == null) {
-                    this.performanceId = res.data.performance_id;
-                }
+                this.performanceId = res.data.performance_id;
                 return;
             }
         },
@@ -762,22 +806,36 @@ export default {
             if (!result.isConfirmed) {
                 return;
             }
-            const url = this.route('submit_form', this.performance.id);
+            this.isSending = true;
+            const url = this.route('submit_form', this.performanceId);
             const res = await axios.patch(url, {});
             if (res.status === 200) {
-                this.$swal({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'ท่านได้ยื่นรายละเอียดการแสดงเรียบร้อยแล้ว',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.href = this.route('index');
-                })
+                this.isSending = false;
+                setTimeout(() => {
+                    this.$swal({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'ท่านได้ยื่นรายละเอียดการแสดงเรียบร้อยแล้ว',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = this.route('index');
+                    })
+                }, 500);
+            } else {
+                this.isSending = false;
             }
         }
     },
     watch: {
+        isSending() {
+            if (!this.isSending) {
+                this.$refs.sendingEmailCloseModal.click();
+                return;
+            }
+            this.$refs.showSendingEmailModal.click();
+            return;
+        },
         form: {
             handler() {
                 this.dirtyForm = true;

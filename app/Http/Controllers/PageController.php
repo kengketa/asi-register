@@ -65,7 +65,10 @@ class PageController extends Controller
         $media = $performance->addMedia($req['image'])->toMediaCollection(Performance::MEDIA_COLLECTION_IMAGES);
         $images = $performance->getMedia(Performance::MEDIA_COLLECTION_IMAGES);
         $imagesData = fractal($images, new ImageTransformer())->toArray();
-        return response()->json($imagesData);
+        $data['images'] = $imagesData;
+        $data['performance_id'] = $performance->id;
+
+        return response()->json($data);
     }
 
     public function deleteImage(Performance $performance, Request $request)
@@ -98,8 +101,9 @@ class PageController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
-        $action->execute($performance, $request->validated());
-        return response()->json(null, 200);
+        $updatedPerformance = $action->execute($performance, $request->validated());
+        $data['performance_id'] = $updatedPerformance->id;
+        return response()->json($data, 200);
     }
 
     public function submitForm(Performance $performance)
@@ -108,7 +112,7 @@ class PageController extends Controller
         $performance->save();
         $updatedPerformance = $performance->fresh();
         $updatedPerformanceData = fractal($updatedPerformance, new PerformanceTransformer())->toArray();
-        Mail::to('recipient@example.com')->send(new SubmitFormEmail($updatedPerformanceData));
+        Mail::to('info@aru.ac.th')->send(new SubmitFormEmail($updatedPerformanceData));
         return response()->json(null, 200);
     }
 
@@ -139,6 +143,8 @@ class PageController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string'],
+            'institution' => ['required', 'string'],
+            'tel' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'confirmed'],
             'terms' => ['required', 'accepted'],
