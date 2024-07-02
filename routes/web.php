@@ -40,6 +40,9 @@ Route::get('/performances/{performance}/pdf', [PageController::class, 'performan
 Route::get('/performances/{performance}/pdf-download', [PageController::class, 'performancePdfDownload'])
     ->name('performance_pdf_download');
 
+Route::get('/performances/{performance}/excel-download', [PageController::class, 'performanceExcelDownload'])
+    ->name('performance_excel_download');
+
 
 //Route::resource('/subjects', SubjectController::class);
 

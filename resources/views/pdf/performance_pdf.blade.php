@@ -422,6 +422,19 @@
         </div>
     </div>
 
+    <div class="w-full">
+        <p class="font-bold text-lg">รูป</p>
+        <div class="w-full grid grid-cols-5 gap-4 mt-4">
+            @foreach($performance['images']['data'] as $image)
+                <div class="w-full h-40 overflow-hidden">
+                    <div class="h-40 relative">
+                        <img src="{{$image['url']}}" class="object-cover w-full h-60">
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
 </div>
 <p></p>
 </body>
