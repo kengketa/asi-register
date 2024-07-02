@@ -1,10 +1,9 @@
 <template>
     <Layout>
         <div>
-            <div v-if="$page.props.user.role.name ==='user'" class="card bg-base-100 w-96 shadow-xl">
+            <div v-if="$page.props.user.role.name ==='user'" class="card bg-base-100 w-96 h-[500px] shadow-xl">
                 <figure>
-                    <img alt="Shoes"
-                         src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg"/>
+                    <img :src="coverImage" alt="cover"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title">งานศิลปวัฒนธรรมอุดมศึกษา</h2>
@@ -50,11 +49,20 @@ export default {
         return {};
     },
     mounted() {
-
     },
     methods: {},
     watch: {},
-    computed: {}
+    computed: {
+        coverImage() {
+            if (!this.performance) {
+                return '/images/logo.jpg';
+            }
+            if (this.performance.images.data.length === 0) {
+                return '/images/logo.jpg'
+            }
+            return this.performance.images.data[0].url;
+        }
+    }
 };
 </script>
 

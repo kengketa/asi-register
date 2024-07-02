@@ -21,11 +21,16 @@
         font-weight: bold;
         font-style: normal;
     }
+
+    @page {
+        size: A4;
+        margin: 0.0cm;
+    }
 </style>
 <head>
     <title>การลงทะเบียนเข้าร่วมงานศิลปวัฒนธรรมอุดมศึกษาครั้งที่ 23</title>
 </head>
-<body>
+<body class="p-8">
 <div class="flex justify-center">
     <div class="w-24 h-24 rounded-full overflow-hidden">
         <img class="object-cover w-24 h-24" src="http://localhost:8000/images/logo.jpg">

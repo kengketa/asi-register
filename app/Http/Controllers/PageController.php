@@ -32,7 +32,7 @@ class PageController extends Controller
         $performance = Performance::where('user_id', Auth::id())->first();
         $performanceData = null;
         if ($performance) {
-            $performanceData = fractal($performance, new PerformanceTransformer())->toArray();
+            $performanceData = fractal($performance, new PerformanceTransformer())->includeImages()->toArray();
         }
         return Inertia::render('Index')->with([
             'performance' => $performanceData
@@ -130,6 +130,7 @@ class PageController extends Controller
 
     public function dashboard()
     {
+        //Auth::logout();
         $user = Auth::user();
         return Inertia::render('Dashboard/Index')->with([]);
     }
@@ -164,10 +165,10 @@ class PageController extends Controller
 
     public function performancePdfDownload(Performance $performance)
     {
-//        Browsershot::url('https://www.lipsum.com')
-//            ->setNodeBinary('/opt/homebrew/lib/node_modules')
-//            ->setNpmBinary('/usr/local/bin/npm')
-//            ->save('example.pdf');
+        Browsershot::url(route('index'))
+            ->setNodeBinary('/opt/homebrew/lib/node_modules')
+            ->setNpmBinary('/opt/homebrew/bin/npm')
+            ->save('example.pdf');
     }
 
     public function print()
