@@ -14,9 +14,9 @@
         </p>
         <div class="bg-white w-full shadow-lg rounded-xl px-8 py-8 mt-4">
             <form>
-                <div v-if="performance.length != 0" class="flex w-full justify-end pr-4 gap-4 items-center">
+                <div v-if="performanceId" class="flex w-full justify-end pr-4 gap-4 items-center">
                     <div v-if="$page.props.user.role.name === 'admin'">
-                        <a :href="route('performance_excel_download',performance.id)" target="_blank">
+                        <a :href="route('performance_excel_download',performanceId)" target="_blank">
                             <svg height="32" viewBox="0 0 50 50" width="32" x="0px" xmlns="http://www.w3.org/2000/svg"
                                  y="0px">
                                 <path
@@ -25,7 +25,7 @@
                         </a>
                     </div>
                     <div v-if="performance.is_published || $page.props.user.role.name === 'admin'">
-                        <a :href="route('performance_pdf_view',performance.id)" class="cursor-pointer" target="_blank">
+                        <a :href="route('performance_pdf_view',performanceId)" class="cursor-pointer" target="_blank">
                             <svg id="Capa_1" fill="#000000" height="30px" version="1.1" viewBox="0 0 48 48"
                                  width="30px" xml:space="preserve"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -41,7 +41,7 @@
                         </a>
                     </div>
                     <div>
-                        <a :href="route('performance_view',this.performance.id)"
+                        <a :href="route('performance_view',performanceId)"
                            class="text-green-600" target="_blank">
                             <svg class="size-8" fill="none" stroke="currentColor" stroke-width="1.5"
                                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
