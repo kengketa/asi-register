@@ -35,6 +35,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/print', [PageController::class, 'print'])->name('print');
 Route::get('/export', [PageController::class, 'export'])->name('export');
 
+Route::get('/performances/{performance}/pdf', [PageController::class, 'performancePdfView'])
+    ->name('performance_pdf_view');
+Route::get('/performances/{performance}/pdf-download', [PageController::class, 'performancePdfDownload'])
+    ->name('performance_pdf_download');
+
+
 //Route::resource('/subjects', SubjectController::class);
 
 //Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
