@@ -130,9 +130,13 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        //Auth::logout();
         $user = Auth::user();
-        return Inertia::render('Dashboard/Index')->with([]);
+        $performanceCount = Performance::count();
+        $publishedPerformanceCount = Performance::where('is_published', true)->count();
+        return Inertia::render('Dashboard/Index')->with([
+            'performanceCount' => $performanceCount,
+            'publishedPerformanceCount' => $publishedPerformanceCount
+        ]);
     }
 
     public function userRegister()
