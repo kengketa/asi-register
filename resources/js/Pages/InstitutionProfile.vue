@@ -1,7 +1,18 @@
 <template>
     <Layout>
         <div>
-            <p class="text-lg font-bold">เปลี่ยนรายละเอียดสถาบัน</p>
+            <div class="flex justify-between px-4">
+                <p class="text-lg font-bold">เปลี่ยนรายละเอียดสถาบัน</p>
+                <Link :href="route('index')" class="flex items-center gap-2">
+                    <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    <p>กลับ</p>
+                </Link>
+            </div>
+
             <div class="bg-white p-8 rounded-md shadow-lg mt-2">
                 <form autocomplete="off" class="grid grid-cols-2 gap-4 mt-2" @submit.prevent="submit">
                     <div>
