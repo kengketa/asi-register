@@ -26,6 +26,9 @@ class PageController extends Controller
 {
     public function index(Request $request)
     {
+        if (Auth::user() && Auth::user()->role->name == 'admin') {
+            return redirect()->route('dashboard.index');
+        }
         $performance = Performance::where('user_id', Auth::id())->first();
         $performanceData = null;
         if ($performance) {
@@ -128,11 +131,7 @@ class PageController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        return Inertia::render('Dashboard/Index')->with([
-            'user' => $user,
-            'number' => 9,
-            'date' => "9-3-2567",
-        ]);
+        return Inertia::render('Dashboard/Index')->with([]);
     }
 
     public function userRegister()

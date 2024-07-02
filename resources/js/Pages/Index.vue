@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div>
-            <div v-if="$page.props.user" class="card bg-base-100 w-96 shadow-xl">
+            <div v-if="$page.props.user.role.name ==='user'" class="card bg-base-100 w-96 shadow-xl">
                 <figure>
                     <img alt="Shoes"
                          src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg"/>

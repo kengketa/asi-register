@@ -610,7 +610,7 @@
                             </div>
                         </button>
                     </div>
-                    <div v-if="performance.length !== 0 && !performance.is_published"
+                    <div v-if="performanceId && !performance.is_published"
                          class="col-span-2 w-full mt-2 flex gap-4 justify-end">
                         <button :disabled="isSubmitting" class="btn btn-primary text-white" type="button"
                                 @click.prevent="submit">
