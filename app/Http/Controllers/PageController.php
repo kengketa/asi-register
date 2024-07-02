@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Dashboard\SavePerformanceAction;
+use App\Actions\Dashboard\SaveUserAction;
 use App\Actions\RegisterUserAction;
+use App\Models\Role;
 use App\Http\Requests\Dashboard\SavePerformanceDraftRequest;
 use App\Http\Transformers\ImageTransformer;
 use App\Http\Transformers\PerformanceTransformer;
@@ -20,6 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubmitFormEmail;
 use Spatie\Browsershot\Browsershot;
+use Illuminate\Validation\Rule;
 
 
 class PageController extends Controller
@@ -37,6 +40,26 @@ class PageController extends Controller
         return Inertia::render('Index')->with([
             'performance' => $performanceData
         ]);
+    }
+
+    public function institutionProfile()
+    {
+        return Inertia::render('InstitutionProfile')->with([]);
+    }
+
+    public function updateInstitutionProfile(Request $request, SaveUserAction $action)
+    {
+        $user = Auth::user();
+        $req = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'tel' => ['required', 'string', 'max:15', 'regex:/^[0-9]{10,15}$/'],
+            'institution' => ['required', 'string', 'max:255', 'unique:users,institution,' . $user->id],
+            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+        ]);
+        $req['role_id'] = Role::where('name', 'user')->first()->id;
+        $action->execute($user, $req);
+        return redirect()->back();
     }
 
     public function form()
@@ -178,26 +201,6 @@ class PageController extends Controller
             ->save('example.pdf');
     }
 
-    public function print()
-    {
-        $data = [
-            'title' => 'สวัสดีครับ',
-            'content' => 'นี่คือเอกสาร PDF ที่สร้างขึ้นโดยใช้ Laravel และ DomPDF รองรับภาษาไทย'
-        ];
-
-        $pdf = Pdf::loadView('pdf.document', $data);
-        return $pdf->download('document.pdf');
-    }
-
-    public function export()
-    {
-        $data = [
-            ['Name', 'Email', 'Created At'],
-            ['John Doe', 'john@example.com', '2024-01-01'],
-            ['Jane Smith', 'jane@example.com', '2024-01-02'],
-        ];
-        return Excel::download(new ArrayExporter($data), 'test-export.xlsx');
-    }
 
     public function performanceExcelDownload(Performance $performance)
     {
@@ -279,15 +282,4 @@ class PageController extends Controller
         return Excel::download(new ArrayExporter($data), $fileName);
     }
 
-//    public function login()
-//    {
-//        return Inertia::render('Auth/Login');
-//    }
-//
-//    public function doLogin(Request $request)
-//    {
-//        $request->only('email', 'password');
-//        $user = User::where('email', $request->email)->first();
-//        dd($request->all());
-//    }
 }

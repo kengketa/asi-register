@@ -20,6 +20,9 @@ if (Features::enabled(Features::registration())) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');
+    Route::get('/institution-profile', [PageController::class, 'institutionProfile'])->name('institution_profile');
+    Route::post('/institution-profile', [PageController::class, 'updateInstitutionProfile'])
+        ->name('update_institution_profile');
     Route::get('/form', [PageController::class, 'form'])->name('form');
     Route::post('/form/save-draft', [PageController::class, 'saveDraft'])->name('save_draft');
     Route::patch('/form/{performance}/submit', [PageController::class, 'submitForm'])->name('submit_form');
@@ -32,8 +35,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-Route::get('/print', [PageController::class, 'print'])->name('print');
-Route::get('/export', [PageController::class, 'export'])->name('export');
+//Route::get('/print', [PageController::class, 'print'])->name('print');
+//Route::get('/export', [PageController::class, 'export'])->name('export');
 
 Route::get('/performances/{performance}/pdf', [PageController::class, 'performancePdfView'])
     ->name('performance_pdf_view');
