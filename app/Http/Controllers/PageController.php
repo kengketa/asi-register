@@ -165,10 +165,10 @@ class PageController extends Controller
 
     public function performancePdfDownload(Performance $performance)
     {
-        Browsershot::url('https://www.lipsum.com')
-            ->setNodeBinary('/opt/homebrew/lib/node_modules')
-            ->setNpmBinary('/usr/local/bin/npm')
-            ->save('example.pdf');
+//        Browsershot::url('https://www.lipsum.com')
+//            ->setNodeBinary('/opt/homebrew/lib/node_modules')
+//            ->setNpmBinary('/usr/local/bin/npm')
+//            ->save('example.pdf');
     }
 
     public function print()
@@ -194,7 +194,7 @@ class PageController extends Controller
 
     public function performanceExcelDownload(Performance $performance)
     {
-        $performanceData = fractal($performance, new PerformanceTransformer())->toArray();
+        $performanceData = fractal($performance, new PerformanceTransformer())->includeImages()->toArray();
         $data = [
             ['ชื่อสถาบัน', $performanceData['owner']['institution']],
             ['ชื่อผู้ประสานงาน', $performanceData['owner']['name']],
@@ -247,8 +247,29 @@ class PageController extends Controller
                 $performanceData['number_of_faculty_and_staff'] . ' ท่าน'
             ],
             ['จำนวนนักศึกษา ที่เข้าร่วม', $performanceData['number_of_students'] . ' คน'],
+            [
+                'รูป 1',
+                isset($performanceData['images']['data'][0]) ? $performanceData['images']['data'][0]['url'] : '-'
+            ],
+            [
+                'รูป 2',
+                isset($performanceData['images']['data'][1]) ? $performanceData['images']['data'][1]['url'] : '-'
+            ],
+            [
+                'รูป 3',
+                isset($performanceData['images']['data'][2]) ? $performanceData['images']['data'][2]['url'] : '-'
+            ],
+            [
+                'รูป 4',
+                isset($performanceData['images']['data'][3]) ? $performanceData['images']['data'][3]['url'] : '-'
+            ],
+            [
+                'รูป 5',
+                isset($performanceData['images']['data'][4]) ? $performanceData['images']['data'][4]['url'] : '-'
+            ],
         ];
-        return Excel::download(new ArrayExporter($data), 'test-export.xlsx');
+        $fileName = $performanceData['owner']['institution'] . ' - ' . $performanceData['owner']['name'] . ' - ' . $performanceData['owner']['tel'] . '.xlsx';
+        return Excel::download(new ArrayExporter($data), $fileName);
     }
 
 //    public function login()
