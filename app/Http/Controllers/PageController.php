@@ -53,7 +53,7 @@ class PageController extends Controller
         $req = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'tel' => ['required', 'string', 'max:15', 'regex:/^[0-9]{10,15}$/'],
+            'tel' => ['nullable', 'string', 'max:10'],
             'institution' => ['required', 'string', 'max:255', 'unique:users,institution,' . $user->id],
             'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ]);
