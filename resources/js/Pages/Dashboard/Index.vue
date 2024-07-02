@@ -18,8 +18,40 @@
                 </div>
             </div>
         </div>
-
-
+        <div>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-gray-700 uppercase bg-gray-50 ">
+                    <tr class="bg-white border-b">
+                        <th class="px-6 py-3">#</th>
+                        <th class="px-6 py-3">ชื่อหน่วยงาน</th>
+                        <th class="px-6 py-3">ชื่อผู้ประสานงาน</th>
+                        <th class="px-6 py-3">อีเมลล์</th>
+                        <th class="px-6 py-3">โทร</th>
+                        <th class="px-6 py-3">สถานะ</th>
+                    </tr>
+                    </thead>
+                    <tbody v-if="performanceData!=null">
+                    <tr v-for="(performance,index) in performanceData" :key="index"
+                        class="bg-white border-b">
+                        <th class="text-center">{{ index + 1 }}</th>
+                        <td class="px-6 py-4">
+                            <a :href="route('dashboard.performances.edit',performance.id)" class="underline"
+                               target="_blank">
+                                {{ performance.owner.institution }}
+                            </a>
+                        </td>
+                        <td>{{ performance.owner.name }}</td>
+                        <td>{{ performance.owner.email }}</td>
+                        <td>{{ performance.owner.tel }}</td>
+                        <td>
+                            ส่งแล้ว ({{ performance.submitted_at }})
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </Layout>
 
 </template>
@@ -37,12 +69,19 @@ export default {
         publishedPerformanceCount: {
             type: Number,
             required: true
+        },
+        performances: {
+            type: Array,
+            required: true
         }
     },
     mounted() {
+        this.performanceData = this.performances;
     },
     data() {
-        return {};
+        return {
+            performanceData: null
+        };
     }
 };
 </script>
