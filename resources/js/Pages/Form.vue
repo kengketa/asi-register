@@ -634,7 +634,7 @@
                         <div class="flex flex-col items-center justify-center gap-2">
                             <span class="loading loading-spinner text-success mt-2"></span>
                             <p class="py-4 text-center text-gray-500">
-                                กำลังส่งข้อมูลให้กับแอดมิน กรุณารอสักครู
+                                กำลังส่งข้อมูลให้กับแอดมิน กรุณารอสักครู่
                                 และอย่าออกจากหน้านี้
                             </p>
                         </div>

@@ -42,7 +42,6 @@ Route::get('/performances/{performance}/pdf', [PageController::class, 'performan
     ->name('performance_pdf_view');
 Route::get('/performances/{performance}/pdf-download', [PageController::class, 'performancePdfDownload'])
     ->name('performance_pdf_download');
-
 Route::get('/performances/{performance}/excel-download', [PageController::class, 'performanceExcelDownload'])
     ->name('performance_excel_download');
 

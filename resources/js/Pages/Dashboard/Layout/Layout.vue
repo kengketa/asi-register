@@ -14,9 +14,7 @@
                                 </svg>
                             </button>
                         </div>
-
                     </div>
-
                 </div>
                 <div class="flex-none gap-2">
                     <div class="dropdown dropdown-end">

@@ -39,7 +39,8 @@
                 <h1 class="text-base md:text-xl lg:text-3xl font-bold text-center">
                     การลงทะเบียนเข้าร่วมงานศิลปวัฒนธรรมอุดมศึกษาครั้งที่ 23</h1>
                 <p class="text-sm md:text-base lg:text-2lx text-center">ระหว่างวันที่ 23-25 กุมภาพันธ์ 2567 ณ
-                    มหาวิทยาลัยxxx</p>
+                    มหาวิทยาลัยxxx
+                </p>
 
                 <div class="text-sm md:text-base space-y-1  lg:space-y-4">
                     <div class="grid grid-cols-12 gap-2">
